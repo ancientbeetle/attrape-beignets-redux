@@ -90,6 +90,7 @@ jobs:
       with:
         tag_name: ${{ inputs.tag }}
         files: ${{ github.workspace }}/bin/Release/*
+        token: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Create Debug
       if: github.event_name == 'workflow_dispatch' && matrix.build_type == 'Debug'
@@ -97,4 +98,5 @@ jobs:
       with:
         tag_name: ${{ inputs.tag_2 }}
         files: ${{ github.workspace }}/bin/Debug/*
+        token: ${{ secrets.GITHUB_TOKEN }}
         
