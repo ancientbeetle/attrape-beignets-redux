@@ -84,19 +84,31 @@ jobs:
         name: beignets-${{ matrix.os }}-${{ matrix.build_type }}
         path: ${{ github.workspace }}/bin/
 
+    - name: Zip Release
+      if: matrix.build_type == 'Release'
+      shell: pwsh
+      run: |
+        Compress-Archive -Path "${{ github.workspace }}/bin/Release/*" -DestinationPath "${{ github.workspace }}/beignets-Release.zip"
+
+    - name: Zip Debug
+      if: matrix.build_type == 'Debug'
+      shell: pwsh
+      run: |
+        Compress-Archive -Path "${{ github.workspace }}/bin/Debug/*" -DestinationPath "${{ github.workspace }}/beignets-Debug.zip"
+
     - name: Create Release
       if: github.event_name == 'workflow_dispatch' && matrix.build_type == 'Release'
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ inputs.tag }}
-        files: ${{ github.workspace }}/bin/Release/*
+        files: ${{ github.workspace }}/beignets-Release.zip
         token: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Create Debug
       if: github.event_name == 'workflow_dispatch' && matrix.build_type == 'Debug'
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ inputs.tag_2 }}
-        files: ${{ github.workspace }}/bin/Debug/*
+        files: ${{ github.workspace }}/beignets-Debug.zip
         token: ${{ secrets.GITHUB_TOKEN }}
         
