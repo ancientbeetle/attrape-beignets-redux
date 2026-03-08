@@ -75,3 +75,9 @@ jobs:
       # Execute tests defined by the CMake configuration. Note that --build-config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest --build-config ${{ matrix.build_type }}
+
+    - name: Upload binaries
+      uses: actions/upload-artifact@v4
+      with:
+        name: beignets-${{ matrix.os }}
+        path: ${{ github.workspace }}/bin/
