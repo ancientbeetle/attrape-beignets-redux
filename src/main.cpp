@@ -379,7 +379,6 @@ int main(void)
     }
 
     CloseWindow();
-
     GameAssets::Unload();
 
     return 0;
