@@ -85,14 +85,14 @@ jobs:
         path: ${{ github.workspace }}/bin/
 
     - name: Create Release
-      if: github.event_name == 'workflow_dispatch'
+      if: github.event_name == 'workflow_dispatch' && matrix.build_type == 'Release'
       uses: softprops/action-gh-release@v1
       with:
         tag_name: ${{ inputs.tag }}
         files: ${{ github.workspace }}/bin/Release/*
         
     - name: Create Debug
-      if: github.event_name == 'workflow_dispatch'
+      if: github.event_name == 'workflow_dispatch' && matrix.build_type == 'Debug'
       uses: softprops/action-gh-release@v1
       with:
         tag_name: ${{ inputs.tag_2 }}
